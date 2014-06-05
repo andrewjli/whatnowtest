@@ -26,7 +26,7 @@ def search():
         data['url'] = request.form['url']
         data['word'] = request.form['word']
     else:
-        return render_template('index.html')
+        return render_template('400.html')
 
     page = urllib2.urlopen(data['url'])
     content = page.read()
