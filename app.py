@@ -22,7 +22,7 @@ def search():
     if request.method == 'GET':
         data['url'] = request.args.get('url', '')
         data['word'] = request.args.get('word', '')
-    if request.method == 'POST':
+    elif request.method == 'POST':
         data['url'] = request.form['url']
         data['word'] = request.form['word']
     else:
