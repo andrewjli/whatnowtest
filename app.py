@@ -1,6 +1,6 @@
 from flask import Flask, request, render_template
 from constants import SITENAME
-import urllib2
+import urllib2, html2text
 
 def configure_sitename(app):
     @app.context_processor
@@ -28,8 +28,17 @@ def search():
     else:
         return render_template('400.html')
 
-    page = urllib2.urlopen(data['url'])
-    content = page.read()
+    try:
+        page = urllib2.urlopen(data['url'], timeout = 5)
+    except urllib2.URLError, e:
+        return render_template('408.html')
+
+    source = page.read()
+
+    handler = html2text.HTML2Text()
+    handler.ignore_links = True
+
+    content = handler.handle(source.decode('utf8').encode('ascii','ignore'))
     data['counter'] = content.count(data['word'].encode('ascii','ignore'))
 
     return render_template('index.html', data=data)
