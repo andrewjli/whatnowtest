@@ -24,16 +24,23 @@ def search():
         'size': 0
     }
     counter = 0
+
     if request.method == 'GET':
-        data['url'] = request.args.get('url', '')
-        data['word'] = request.args.get('word', '')
-        if request.args.get('withdebug'):
-            debug = int(request.args.get('withdebug'))
+        if request.args.get('url', '') and request.args.get('word', ''):
+            data['url'] = request.args.get('url', '')
+            data['word'] = request.args.get('word', '')
+            if request.args.get('withdebug'):
+                debug = int(request.args.get('withdebug'))
+        else:
+            return render_template('400.html')
     elif request.method == 'POST':
-        data['url'] = request.form['url']
-        data['word'] = request.form['word']
-        if request.form['withdebug']:
-            debug = int(request.form['withdebug'])
+        try:
+            data['url'] = request.form['url']
+            data['word'] = request.form['word']
+            if request.form['withdebug']:
+                debug = int(request.form['withdebug'])
+        except KeyError, e:
+            return render_template('400.html')
     else:
         return render_template('400.html')
 
