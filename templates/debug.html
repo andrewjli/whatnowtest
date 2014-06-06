@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div class="content">
+      <div class="jumbotron">
+        <p>Requested URL: <a href="{{ data.url }}">{{ data.url }}</a></p>
+        <p>Requested word (case sensitive): {{ data.word }}</p>
+        <p>Number of occurances on page: {{ data.counter }}</p>
+        <p>Time taken: {{ data.time }}s</p>
+        <p>Page size: {% if data.size != 0 %}{{ data.size }} bytes{% else %}unknown {% endif %}</p>
+      </div>
+    </div>
+{% endblock %}
